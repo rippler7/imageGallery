@@ -30,6 +30,7 @@ The main goal is to make the UI as smooth as possible and apply best practices i
     * Modify any existing files that are not contained in the "do-not-refactor" directory
 	* Add any third-party libraries
 	* Add any front-end transpilers, module bundlers, or task managers
+	* Add tree-shaking on JS and CSS
 	* Change and/or improve the existing UI
 	* Add live reload for every file changes
 	* Wrap the frontend into a Docker container (Big plus)
