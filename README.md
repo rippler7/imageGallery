@@ -42,3 +42,8 @@ To run the app, make sure you have Node installed in your machine.
 npm install
 npm start
 ```
+
+## Submitting your work
+Create a separate branch by following this notation: feature/{applicant-fullname}
+
+Create a Pull Request to the master branch. 
