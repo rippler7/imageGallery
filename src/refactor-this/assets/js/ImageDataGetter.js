@@ -1,73 +1,39 @@
 function ImageDataGetter() {}
 
+// Generic function to fetch images based on category and optional page
+ImageDataGetter.fetchImages = function (category, page = '') {
+  const url = `http://localhost:8888/images?category=${category}&page=${page}`;
+  return fetch(url)
+    .then(response => response.json())
+    .then(result => result)
+    .catch(error => {
+      console.error(`Failed to fetch images for category '${category}' and page '${page}':`, error);
+      return []; // Return empty array or handle error accordingly
+    });
+};
+
+// Specific functions for fetching images without pagination
 ImageDataGetter.getNatureImages = function () {
-  var images = []
-  return fetch('http://localhost:8888/images?category=nature')
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('nature');
+};
 
 ImageDataGetter.getArchitectureImages = function () {
-  var images = []
-  return fetch('http://localhost:8888/images?category=architecture')
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('architecture');
+};
 
 ImageDataGetter.getFashionImages = function () {
-  var images = []
-  return fetch('http://localhost:8888/images?category=fashion')
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('fashion');
+};
 
+// Specific functions for fetching images with pagination
 ImageDataGetter.getNatureImagesFromPage = function (page) {
-  var images = []
-  return fetch('http://localhost:8888/images?category=nature&page=' + page)
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('nature', page);
+};
 
 ImageDataGetter.getArchitectureImagesFromPage = function (page) {
-  var images = []
-  return fetch('http://localhost:8888/images?category=architecture&page=' + page)
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('architecture', page);
+};
 
 ImageDataGetter.getFashionImagesFromPage = function (page) {
-  var images = []
-  return fetch('http://localhost:8888/images?category=fashion&page=' + page)
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (result) {
-      images = result
-      return images
-    })
-}
+  return ImageDataGetter.fetchImages('fashion', page);
+};
