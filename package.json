@@ -5,7 +5,8 @@
   "main": "src/refactor-this/index.js",
   "scripts": {
     "start": "node src/do-not-refactor/server.js | serve src/refactor-this",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "postcss src/refactor-this/assets/css/main.css -o build/main.css"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,14 @@
   },
   "homepage": "https://gitlab.com/Blvnp_Developers/technical-test#readme",
   "dependencies": {
+    "autoprefixer": "^10.4.19",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "serve": "^11.3.2"
+    "postcss-cli": "^11.0.0",
+    "serve": "^14.2.3",
+    "watch": "^0.13.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
   }
 }

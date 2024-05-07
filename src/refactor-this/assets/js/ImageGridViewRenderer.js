@@ -4,7 +4,7 @@ ImageGridViewRenderer.prototype.render = function () {
   /// Define the navbar HTML using template literals
   const navLinks = `
   <div class="navbar-nav">
-    <a class="nav-link active" href="?category=nature">Nature <span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="?category=nature">Nature</a>
     <a class="nav-link" href="?category=architecture">Architecture</a>
     <a class="nav-link" href="?category=fashion">Fashion</a>
   </div>
@@ -12,7 +12,7 @@ ImageGridViewRenderer.prototype.render = function () {
 
   const navHTML = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Photo Sharing App</a>
+    <div class="flex w-12"><h1><a class="navbar-brand" href="#">Photo Sharing App</a></h1></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -49,21 +49,24 @@ ImageGridViewRenderer.prototype.render = function () {
   });
 
   let page = 1;
-  const urlParams = new URLSearchParams(window.location.search);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  let category = urlParams.get('category');
+  if(!category){
+    category = "nature";
+  }
   if (urlParams.has('page')) {
     page = Number(urlParams.get('page'));
-  }
-
-  const category = urlParams.get('category');
+  }   
   if (category) {
     this.renderImagesContainer(category, page);
   }
 
 };
 
-ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page = 1){
+ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page){
   console.log(category);
-  if (window.location.search.includes(category)) {
+  
     document.getElementById("main-view").innerHTML +=
       '<div class="container">'
       + `<div id="${category}-images" class="row row-cols-3"></div>`
@@ -112,12 +115,12 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page 
       }
       
     }
-  }
+  
 
-  let prevsearchstr = window.location.search.split('&page')[0] + '&page=' + (page - 1)
-  let nextsearchstr = window.location.search.split('&page')[0] + '&page=' + (page + 1)
+  let prevsearchstr = window.location.search.split('&page')[0] + '&page=' + (page - 1);
+  let nextsearchstr = window.location.search.split('&page')[0] + '&page=' + (page + 1);
   let pagination =
-    '<nav>'
+    '<nav class="w-full">'
     + '  <ul class="pagination">'
     + '    <li class="page-item"><a class="page-link" href="' + prevsearchstr + '">Previous</a></li>'
     + '    <li class="page-item"><a class="page-link" href="' + nextsearchstr + '">Next</a></li>'
