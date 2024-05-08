@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/do-not-refactor/server.js | serve src/refactor-this",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "postcss src/refactor-this/assets/css/main.css -o build/main.css"
+    "build": "postcss src/refactor-this/assets/css/main.css -o build/style.css"
   },
   "repository": {
     "type": "git",
