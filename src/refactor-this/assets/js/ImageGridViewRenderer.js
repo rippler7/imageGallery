@@ -3,7 +3,7 @@ function ImageGridViewRenderer() { }
 ImageGridViewRenderer.prototype.render = function () {
   /// Define the navbar HTML using template literals
   const navLinks = `
-  <div class="navbar-nav grid grid-cols-3">
+  <div class="navbar-nav">
     <a class="nav-link" href="?category=nature">Nature</a>
     <a class="nav-link" href="?category=architecture">Architecture</a>
     <a class="nav-link" href="?category=fashion">Fashion</a>
@@ -11,12 +11,9 @@ ImageGridViewRenderer.prototype.render = function () {
 `;
 
   const navHTML = `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="flex w-full"><h1><a class="navbar-brand" href="#"><h1>Photo Sharing App</h1></a></div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3">
+    <div class="flex w-full"><h1><a class="navbar-brand" href="index.html"><h1>Photo Sharing App</h1></a></div>
+    <div class="w-1/3 content-between" id="navbarNavAltMarkup">
       ${navLinks}
     </div>
   </nav>
@@ -47,7 +44,7 @@ ImageGridViewRenderer.prototype.render = function () {
       this.renderImagesContainer(href);
     });
   });
-
+  
   let page = 1;
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -65,16 +62,17 @@ ImageGridViewRenderer.prototype.render = function () {
 };
 
 ImageGridViewRenderer.prototype.renderImagesContainer = function (category, page) {
-  console.log(category);
-
-  document.getElementById("main-view").innerHTML += `<div id="loading-animation" style="display: none;" class="w-full text-center align-middle p-10 size-7">
-    <div class="spinner-border w-full text-center flex-wrap size-10 p-5" role="status">
-      <span class="sr-only">Loading...</span>
+  if(!window.location.search){
+    window.location.search = `?category=${category}&page=${page}`;
+  }
+  document.getElementById("main-view").innerHTML += `<div id="loading-animation" style="display: none;" class="w-full text-center align-middle h-screen p-10 size-7">
+    <div class="spinner-border w-full text-center align-middle flex-wrap h-screen size-10 p-5" role="status">
+      <div class="sr-only text-center align-middle">Loading...</div>
     </div>
   </div>`
   document.getElementById('loading-animation').style.display = 'block';
   document.getElementById("main-view").innerHTML +=
-    '<div class="container">'
+    '<div class="container mx-auto">'
     + `<div id="${category}-images" class="row row-cols-3"></div>`
     + '</div>'
 
@@ -122,14 +120,11 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function (category, page
           }
         });
     }
-
   }
-
-
   let prevsearchstr = window.location.search.split('&page')[0] + '&page=' + (page - 1);
   let nextsearchstr = window.location.search.split('&page')[0] + '&page=' + (page + 1);
   let pagination =
-    '<nav class="w-full content-center grid grid-cols-2 align-bottom">'
+    '<nav class="w-full content-center grid grid-cols-2 fixed inset-x-0 bottom-0 z-10 pt-5">'
     + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + prevsearchstr + '">Previous</a></div>'
     + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + nextsearchstr + '">Next</a></div>'
     + '</nav>'
