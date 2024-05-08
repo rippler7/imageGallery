@@ -3,7 +3,7 @@ function ImageGridViewRenderer() { }
 ImageGridViewRenderer.prototype.render = function () {
   /// Define the navbar HTML using template literals
   const navLinks = `
-  <div class="navbar-nav">
+  <div class="navbar-nav grid grid-cols-3">
     <a class="nav-link" href="?category=nature">Nature</a>
     <a class="nav-link" href="?category=architecture">Architecture</a>
     <a class="nav-link" href="?category=fashion">Fashion</a>
@@ -130,10 +130,8 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function (category, page
   let nextsearchstr = window.location.search.split('&page')[0] + '&page=' + (page + 1);
   let pagination =
     '<nav class="w-full content-center grid grid-cols-2 align-bottom">'
-
     + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + prevsearchstr + '">Previous</a></div>'
     + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + nextsearchstr + '">Next</a></div>'
-
     + '</nav>'
 
   document.getElementById("main-view").innerHTML += pagination;
