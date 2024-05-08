@@ -1,5 +1,4 @@
 function ImageDataGetter() {}
-
 // Generic function to fetch images based on category and optional page
 ImageDataGetter.fetchImages = function (category, page = '') {
   const url = `http://localhost:8888/images?category=${category}&page=${page}`;

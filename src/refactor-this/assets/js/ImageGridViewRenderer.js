@@ -12,7 +12,7 @@ ImageGridViewRenderer.prototype.render = function () {
 
   const navHTML = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="flex w-12"><h1><a class="navbar-brand" href="#">Photo Sharing App</a></h1></div>
+    <div class="flex w-full"><h1><a class="navbar-brand" href="#"><h1>Photo Sharing App</h1></a></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,30 +52,37 @@ ImageGridViewRenderer.prototype.render = function () {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   let category = urlParams.get('category');
-  if(!category){
+  if (!category) {
     category = "nature";
   }
   if (urlParams.has('page')) {
     page = Number(urlParams.get('page'));
-  }   
+  }
   if (category) {
     this.renderImagesContainer(category, page);
   }
 
 };
 
-ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page){
+ImageGridViewRenderer.prototype.renderImagesContainer = function (category, page) {
   console.log(category);
-  
-    document.getElementById("main-view").innerHTML +=
-      '<div class="container">'
-      + `<div id="${category}-images" class="row row-cols-3"></div>`
-      + '</div>'
 
-    for (let item = 2; item >= 0; item--) {
-      if(category === "nature"){
-        ImageDataGetter.getNatureImagesFromPage((page * 3) - item)
+  document.getElementById("main-view").innerHTML += `<div id="loading-animation" style="display: none;" class="w-full text-center align-middle p-10 size-7">
+    <div class="spinner-border w-full text-center flex-wrap size-10 p-5" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>`
+  document.getElementById('loading-animation').style.display = 'block';
+  document.getElementById("main-view").innerHTML +=
+    '<div class="container">'
+    + `<div id="${category}-images" class="row row-cols-3"></div>`
+    + '</div>'
+
+  for (let item = 2; item >= 0; item--) {
+    if (category === "nature") {
+      ImageDataGetter.getNatureImagesFromPage((page * 3) - item)
         .then(function (images) {
+          document.getElementById('loading-animation').style.display = 'none';
           for (const element of images) {
             document.getElementById(`${category}-images`).innerHTML +=
               '<div class="col" style="height: 400px; padding: 10px;">'
@@ -86,9 +93,10 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page)
               + '</div>'
           }
         });
-      } else if(category === "architecture"){
-        ImageDataGetter.getArchitectureImagesFromPage((page * 3) - item)
+    } else if (category === "architecture") {
+      ImageDataGetter.getArchitectureImagesFromPage((page * 3) - item)
         .then(function (images) {
+          document.getElementById('loading-animation').style.display = 'none';
           for (const element of images) {
             document.getElementById(`${category}-images`).innerHTML +=
               '<div class="col" style="height: 400px; padding: 10px;">'
@@ -99,9 +107,10 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page)
               + '</div>'
           }
         });
-      } else if(category === "fashion"){
-        ImageDataGetter.getFashionImagesFromPage((page * 3) - item)
+    } else if (category === "fashion") {
+      ImageDataGetter.getFashionImagesFromPage((page * 3) - item)
         .then(function (images) {
+          document.getElementById('loading-animation').style.display = 'none';
           for (const element of images) {
             document.getElementById(`${category}-images`).innerHTML +=
               '<div class="col" style="height: 400px; padding: 10px;">'
@@ -112,19 +121,19 @@ ImageGridViewRenderer.prototype.renderImagesContainer = function(category, page)
               + '</div>'
           }
         });
-      }
-      
     }
-  
+
+  }
+
 
   let prevsearchstr = window.location.search.split('&page')[0] + '&page=' + (page - 1);
   let nextsearchstr = window.location.search.split('&page')[0] + '&page=' + (page + 1);
   let pagination =
-    '<nav class="w-full">'
-    + '  <ul class="pagination">'
-    + '    <li class="page-item"><a class="page-link" href="' + prevsearchstr + '">Previous</a></li>'
-    + '    <li class="page-item"><a class="page-link" href="' + nextsearchstr + '">Next</a></li>'
-    + '  </ul>'
+    '<nav class="w-full content-center grid grid-cols-2 align-bottom">'
+
+    + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + prevsearchstr + '">Previous</a></div>'
+    + '    <div class="page-item text-center w-0.75"><a class="page-link" href="' + nextsearchstr + '">Next</a></div>'
+
     + '</nav>'
 
   document.getElementById("main-view").innerHTML += pagination;
