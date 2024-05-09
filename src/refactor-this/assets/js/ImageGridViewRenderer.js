@@ -44,7 +44,7 @@ ImageGridViewRenderer.prototype.render = function () {
       this.renderImagesContainer(href);
     });
   });
-  
+  // this section should initialize and set the category and page 
   let page = 1;
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -62,51 +62,30 @@ ImageGridViewRenderer.prototype.render = function () {
 };
 
 ImageGridViewRenderer.prototype.renderImagesContainer = function (category, page) {
-  if(!window.location.search){
+  //so this takes the category and page from the browser addressbar and we have to set a consistent format as well
+  if (!window.location.search) {
     window.location.search = `?category=${category}&page=${page}`;
   }
+  // this is the loading animation spinner section
   document.getElementById("main-view").innerHTML += `<div id="loading-animation" style="display: none;" class="w-full text-center align-middle h-screen p-10 size-7">
     <div class="spinner-border w-full text-center align-middle flex-wrap h-screen size-10 p-5" role="status">
       <div class="sr-only text-center align-middle">Loading...</div>
     </div>
   </div>`
+  //set the spinner loading anim as visible while images aren't loaded in yet
   document.getElementById('loading-animation').style.display = 'block';
+
+  //populate the image grid
   document.getElementById("main-view").innerHTML +=
     '<div class="container mx-auto">'
-    + `<div id="${category}-images" class="row row-cols-3"></div>`
+    + `<div id="${category}-images" class="grid grid-cols-3"></div>`
     + '</div>'
 
+  //do a for loop 3 times for every 3 output on every pass and then fetch the images dynamically
   for (let item = 2; item >= 0; item--) {
-    if (category === "nature") {
-      ImageDataGetter.getNatureImagesFromPage((page * 3) - item)
-        .then(function (images) {
-          document.getElementById('loading-animation').style.display = 'none';
-          for (const element of images) {
-            document.getElementById(`${category}-images`).innerHTML +=
-              '<div class="col" style="height: 400px; padding: 10px;">'
-              + '  <img class="image" src="' + element.url + '" alt="' + element.name + '" style="height: 100%; object-fit: cover; width: 100%;" />'
-              + '  <div class="middle">'
-              + '    <a class="btn btn-dark" href="' + element.url + '" download="' + element.name + '">DOWNLOAD</a>'
-              + '  </div>'
-              + '</div>'
-          }
-        });
-    } else if (category === "architecture") {
-      ImageDataGetter.getArchitectureImagesFromPage((page * 3) - item)
-        .then(function (images) {
-          document.getElementById('loading-animation').style.display = 'none';
-          for (const element of images) {
-            document.getElementById(`${category}-images`).innerHTML +=
-              '<div class="col" style="height: 400px; padding: 10px;">'
-              + '  <img class="image" src="' + element.url + '" alt="' + element.name + '" style="height: 100%; object-fit: cover; width: 100%;" />'
-              + '  <div class="middle">'
-              + '    <a class="btn btn-dark" href="' + element.url + '" download="' + element.name + '">DOWNLOAD</a>'
-              + '  </div>'
-              + '</div>'
-          }
-        });
-    } else if (category === "fashion") {
-      ImageDataGetter.getFashionImagesFromPage((page * 3) - item)
+    if (category) {
+      console.log(category);
+      ImageDataGetter.getCatImagesFromPage(category, (page * 3) - item)
         .then(function (images) {
           document.getElementById('loading-animation').style.display = 'none';
           for (const element of images) {

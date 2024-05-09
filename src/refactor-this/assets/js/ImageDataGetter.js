@@ -36,3 +36,12 @@ ImageDataGetter.getArchitectureImagesFromPage = function (page) {
 ImageDataGetter.getFashionImagesFromPage = function (page) {
   return ImageDataGetter.fetchImages('fashion', page);
 };
+
+//--------------dynamic version, which is the preferred method-----------------------
+ImageDataGetter.getCatImages = function(category){
+  return ImageDataGetter.fetchImages(category);
+}
+
+ImageDataGetter.getCatImagesFromPage = function (category,page) {
+  return ImageDataGetter.fetchImages(category, page);
+};
