@@ -12,7 +12,7 @@ ImageGridViewRenderer.prototype.render = function () {
 
   const navHTML = `
     <nav class="navbar fixed w-full navbar-expand-lg bg-white shadow p-3 top-0 content-center z-10">
-      <div class="flex w-full"><h1><a class="navbar-brand text-gray-800 hover:text-cyan-700" href="index.html">Photo Sharing App</h1></a></div>
+      <div class="flex w-full"><h1 class="text-lg"><a class="navbar-brand text-gray-800 hover:text-cyan-700" href="index.html">Photo Sharing App</h1></a></div>
       <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 content-stretch flex flex-wrap text-center justify-between" id="navbarNavAltMarkup">
         ${navLinks}
       </div>
@@ -30,6 +30,8 @@ ImageGridViewRenderer.prototype.render = function () {
   navLinksList.forEach(link => {
     link.addEventListener('click', (event) => {
       event.preventDefault(); // Prevent default link behavior
+
+      console.log("clicked!");
 
       // Remove 'active' class from all nav-links
       navLinksList.forEach(navLink => {
